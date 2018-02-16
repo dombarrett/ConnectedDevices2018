@@ -4,6 +4,11 @@
 	created 19 April 2015
 	by Tom Igoe
 	based on node.js and stackoverflow examples
+
+  //found here:
+  https://github.com/tigoe/NodeExamples/tree/master/SimpleClient
+
+
 */
 
 // you can do this with http or https:
