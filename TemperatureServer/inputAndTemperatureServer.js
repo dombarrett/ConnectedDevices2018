@@ -34,9 +34,23 @@ if(!adc.busy)
       throw err;
     }
     // if you made it here, then the data object contains your reading!
-    reading = ((data-100)/10)-40;
+    potReading = data;
     console.log("Pin 1 Data: "+data);
     console.log("Pin 1 Reading: " + potReading);
+
+    //trying inside of this? Will probably cause a adc busy error
+    adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
+      if(err)
+      {
+        //logging / troubleshooting code goes here...
+        throw err;
+      }
+      // if you made it here, then the data object contains your reading!
+      reading = ((data-100)/10)-40;
+  	  console.log("Pin 0 Data: "+data);
+  	  console.log("Pin 0 Reading: " + tempReading);
+  	 }
+
    }    // any other data processing code goes here...
   );
 }
