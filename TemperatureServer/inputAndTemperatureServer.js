@@ -21,7 +21,8 @@ var progGainAmp = '4096'; // see index.js for allowed values for your chip
 var reading  = 0;
 if(!adc.busy)
 {
-  adc.readADCSingleEnded(channel, progGainAmp, samplesPerSecond, function(err, data) {
+  //Read the first ADC pin
+  adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
     if(err)
     {
       //logging / troubleshooting code goes here...
@@ -29,9 +30,23 @@ if(!adc.busy)
     }
     // if you made it here, then the data object contains your reading!
     reading = ((data-100)/10)-40;
-	console.log("Data: "+data);
-	console.log("Reading: " + reading);
+	console.log("Pin 0 Data: "+data);
+	console.log("Pin 0 Reading: " + reading);
 	}    // any other data processing code goes here...
+
+  //Now read the second ADC pin with the same code:
+  adc.readADCSingleEnded(channel1, progGainAmp, samplesPerSecond, function(err, data) {
+    if(err)
+    {
+      //logging / troubleshooting code goes here...
+      throw err;
+    }
+    // if you made it here, then the data object contains your reading!
+    reading = ((data-100)/10)-40;
+	console.log("Pin 1 Data: "+data);
+	console.log("Pin 1 Reading: " + reading);
+	}    // any other data processing code goes here...
+
   );
 }
 
