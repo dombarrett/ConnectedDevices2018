@@ -34,7 +34,7 @@ if(!adc.busy)
       throw err;
     }
     // if you made it here, then the data object contains your reading!
-    potReading = data;
+    potReading = ((data-100)/10)-40;
     console.log("Pin 1 Data: "+data);
     console.log("Pin 1 Pot Reading: " + potReading);
 
