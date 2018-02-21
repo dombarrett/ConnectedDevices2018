@@ -36,9 +36,9 @@ if(!adc.busy)
     // if you made it here, then the data object contains your reading!
     potReading = data;
     console.log("Pin 1 Data: "+data);
-    console.log("Pin 1 Reading: " + potReading);
+    console.log("Pin 1 Pot Reading: " + potReading);
 
-    //trying inside of this? Will probably cause a adc busy error
+    //Temperature Reading
     adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
       if(err)
       {
@@ -46,9 +46,9 @@ if(!adc.busy)
         throw err;
       }
       // if you made it here, then the data object contains your reading!
-      reading = ((data-100)/10)-40;
+      tempReading = ((data-100)/10)-40;
   	  console.log("Pin 0 Data: "+data);
-  	  console.log("Pin 0 Reading: " + tempReading);
+  	  console.log("Pin 0 Temp Reading: " + tempReading);
   	 }
    );
    }    // any other data processing code goes here...
@@ -79,7 +79,7 @@ var http = require('https');
 var postData =JSON.stringify({
   "macAddress":"12:12",
   "sessionKey": "1212",
-  "data": {"temp":"20"}
+  "data": {"temp":tempReading}
 });
 
 /*
@@ -87,24 +87,6 @@ var postData =JSON.stringify({
  the full URL in this case is:
  http://example.com:443/login
 */
-
-
-if(!adc.busy)
-{
-  //Read the first ADC pin (temperature)
-  adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
-    if(err)
-    {
-      //logging / troubleshooting code goes here...
-      throw err;
-    }
-    // if you made it here, then the data object contains your reading!
-    reading = ((data-100)/10)-40;
-	  console.log("Pin 0 Data: "+data);
-	  console.log("Pin 0 Reading: " + tempReading);
-	 }    // any other data processing code goes here...
-  );
-}
 
 var options = {
   host: 'connected-devices-itp.herokuapp.com',
