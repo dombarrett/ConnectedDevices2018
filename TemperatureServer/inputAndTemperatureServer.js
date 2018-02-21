@@ -49,13 +49,6 @@ if(!adc.busy)
       tempReading = ((data-100)/10)-40;
   	  console.log("Pin 0 Data: "+data);
   	  console.log("Pin 0 Temp Reading: " + tempReading);
-
-      var postData =JSON.stringify({
-        "macAddress":"12:12",
-        "sessionKey": "1212",
-        "data": {"temp":tempReading}
-      });
-
   	 }
    );
    }    // any other data processing code goes here...
@@ -83,13 +76,13 @@ if(!adc.busy)
 var http = require('https');
 
 // make the POST data a JSON object and stringify it:
-//moved to inside of the ADC read
-/*var postData =JSON.stringify({
+
+var postData =JSON.stringify({
   "macAddress":"12:12",
   "sessionKey": "1212",
   "data": {"temp":tempReading}
 });
-*/
+
 
 /*
  set up the options for the request.
@@ -130,8 +123,9 @@ function callback(response) {
 
 
 
-
-// make the actual request:
-var request = http.request(options, callback);	// start it
-request.write(postData);							// send the data
-request.end();												// end it
+if (tempReading != 0){
+  // make the actual request:
+  var request = http.request(options, callback);	// start it
+  request.write(postData);							// send the data
+  request.end();												// end it
+}
