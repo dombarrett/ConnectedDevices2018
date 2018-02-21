@@ -58,15 +58,20 @@ if(!adc.busy)
   	  console.log("Pin 0 Data: "+data);
   	  console.log("Pin 0 Temp Reading: " + tempReading);
 
-      if(tempReading<potReading){
+      if(tempReading-3<potReading){
         ledRed.writeSync(1);
         ledBlue.writeSync(0);
         ledYellow.writeSync(0);
       }
-      else if(tempReading>potReading){
+      else if(tempReading+3>potReading){
         ledRed.writeSync(0);
         ledBlue.writeSync(1);
         ledYellow.writeSync(0);
+      }
+      else{
+        ledRed.writeSync(0);
+        ledBlue.writeSync(0);
+        ledYellow.writeSync(1);
       }
 
 
