@@ -1,3 +1,8 @@
+//LEDs
+var Gpio = require('onoff').Gpio,
+led = new Gpio(17, 'out');
+
+
 //
 //ADC reading example
 //
@@ -49,6 +54,15 @@ if(!adc.busy)
       tempReading = ((data-100)/10)-40;
   	  console.log("Pin 0 Data: "+data);
   	  console.log("Pin 0 Temp Reading: " + tempReading);
+
+      if(tempReading<potReading){
+        led.writeSync(1);
+      }
+      else if(tempReading>potReading){
+        led.writeSync(0);
+      }
+
+
   	 }
    );
    }    // any other data processing code goes here...
