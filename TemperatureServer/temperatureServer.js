@@ -1,3 +1,43 @@
+var ads1x15 = require('node-ads1x15');
+var chip = 0; //0 for ads1015, 1 for ads1115
+
+//Simple usage (default ADS address on pi 2b or 3):
+var adc = new ads1x15(chip);
+
+// Optionally i2c address as (chip, address) or (chip, address, i2c_dev)
+// So to use  /dev/i2c-0 use the line below instead...:
+
+//    var adc = new ads1x15(chip, 0x48, 'dev/i2c-0');
+
+var channel0 = 0; //channel 0, 1, 2, or 3...
+var channel1 = 1;
+var samplesPerSecond = '250'; // see index.js for allowed values for your chip
+var progGainAmp = '4096'; // see index.js for allowed values for your chip
+
+//somewhere to store our reading
+var tempReading  = 0;
+var potReading = 0;
+
+
+
+//Temperature Reading
+if(!adc.busy)
+{
+  adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
+    if(err)
+    {
+      //logging / troubleshooting code goes here...
+      throw err;
+    }
+    // if you made it here, then the data object contains your reading!
+    tempReading = ((data-100)/10)-40;
+    console.log("Pin 0 Data: "+data);
+    console.log("Pin 0 Temp Reading: " + tempReading);
+   }    // any other data processing code goes here...
+  );
+}
+
+
 /*
 	Simple HTTP/HTTPS request example
 	Demonstrates a POST request with the body sent as JSON
@@ -18,7 +58,7 @@ var http = require('https');
 var postData =JSON.stringify({
   "macAddress":"12:12",
   "sessionKey": "1212",
-  "data": {"temp":"20"}
+  "data": {"temp":tempReading}
 });
 
 /*
