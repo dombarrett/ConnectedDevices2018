@@ -1,6 +1,8 @@
 //LEDs
 var Gpio = require('onoff').Gpio,
-led = new Gpio(17, 'out');
+ledRed = new Gpio(17, 'out'),
+ledBlue = new Gpio(27, 'out')
+;
 
 
 //
@@ -56,10 +58,12 @@ if(!adc.busy)
   	  console.log("Pin 0 Temp Reading: " + tempReading);
 
       if(tempReading<potReading){
-        led.writeSync(1);
+        ledRed.writeSync(1);
+        ledBlue.writeSync(0);
       }
       else if(tempReading>potReading){
-        led.writeSync(0);
+        ledRed.writeSync(0);
+        ledBlue.writeSync(1);
       }
 
 
