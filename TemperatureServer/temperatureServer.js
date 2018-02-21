@@ -18,7 +18,11 @@ var progGainAmp = '4096'; // see index.js for allowed values for your chip
 var tempReading  = 0;
 var potReading = 0;
 
-setInterval(readAndPostTemp,1111);
+//if you want to do repeatedly, per millisecond:
+//setInterval(readAndPostTemp,1111);
+
+//if you want to run once:
+readAndPostTemp();
 
 function readAndPostTemp(){
 //Temperature Reading
