@@ -19,25 +19,12 @@ var samplesPerSecond = '250'; // see index.js for allowed values for your chip
 var progGainAmp = '4096'; // see index.js for allowed values for your chip
 
 //somewhere to store our reading
-var reading  = 0;
-if(!adc.busy)
-{
-  //Read the first ADC pin
-  adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
-    if(err)
-    {
-      //logging / troubleshooting code goes here...
-      throw err;
-    }
-    // if you made it here, then the data object contains your reading!
-    reading = ((data-100)/10)-40;
-	  console.log("Pin 0 Data: "+data);
-	  console.log("Pin 0 Reading: " + reading);
-	 }    // any other data processing code goes here...
-  );
-}
+var tempReading  = 0;
+var potReading = 0;
 
-//Now read the second ADC pin with the same code:
+
+
+//Read the second ADC pin (potentometer) with the same code:
 if(!adc.busy)
 {
   adc.readADCSingleEnded(channel1, progGainAmp, samplesPerSecond, function(err, data) {
@@ -49,7 +36,7 @@ if(!adc.busy)
     // if you made it here, then the data object contains your reading!
     reading = ((data-100)/10)-40;
     console.log("Pin 1 Data: "+data);
-    console.log("Pin 1 Reading: " + reading);
+    console.log("Pin 1 Reading: " + potReading);
    }    // any other data processing code goes here...
   );
 }
@@ -87,6 +74,24 @@ var postData =JSON.stringify({
  http://example.com:443/login
 */
 
+
+if(!adc.busy)
+{
+  //Read the first ADC pin (temperature)
+  adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
+    if(err)
+    {
+      //logging / troubleshooting code goes here...
+      throw err;
+    }
+    // if you made it here, then the data object contains your reading!
+    reading = ((data-100)/10)-40;
+	  console.log("Pin 0 Data: "+data);
+	  console.log("Pin 0 Reading: " + tempReading);
+	 }    // any other data processing code goes here...
+  );
+}
+
 var options = {
   host: 'connected-devices-itp.herokuapp.com',
   port: 443,
@@ -116,6 +121,10 @@ function callback(response) {
     console.log(result);
   });
 }
+
+
+
+
 
 // make the actual request:
 var request = http.request(options, callback);	// start it
