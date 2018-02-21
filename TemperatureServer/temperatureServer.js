@@ -18,8 +18,9 @@ var progGainAmp = '4096'; // see index.js for allowed values for your chip
 var tempReading  = 0;
 var potReading = 0;
 
+setInterval(readAndPostTemp(),1111);
 
-
+function readAndPostTemp(){
 //Temperature Reading
 if(!adc.busy)
 {
@@ -101,18 +102,11 @@ if(!adc.busy)
     request.end();												// end it
 
 
+      //End of HTTP posting
+     }    // any other data processing code goes here...
+     //Ending the ADC read
+    );
+  }
 
-
-
-
-
-   }    // any other data processing code goes here...
-
-
-
-
-
-   //then...
-   //ALLLL the way back, we're ending the encapsulation of the adc read
-  );
+//end main readAndPostTemp function
 }

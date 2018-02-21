@@ -40,12 +40,13 @@ function readADC(){
       if(err)
       {
         //logging / troubleshooting code goes here...
+        console.log("Reading for LED set state threw an error");
         throw err;
       }
       // if you made it here, then the data object contains your reading!
       potReading = scale(data,-50,3220,15,30)
-      console.log("Pin 1 Pot Reading: "+ data);
-      console.log("Pin 1 Temp Set: " + potReading);
+      //console.log("Pin 1 Pot Reading: "+ data);
+      //console.log("Pin 1 Temp Set: " + potReading);
 
       //Temperature Reading
       adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
@@ -56,8 +57,8 @@ function readADC(){
         }
         // if you made it here, then the data object contains your reading!
         tempReading = ((data-100)/10)-40;
-    	  console.log("Pin 0 Data: "+data);
-    	  console.log("Pin 0 Temp Reading: " + tempReading);
+    	  //console.log("Pin 0 Data: "+data);
+    	  //console.log("Pin 0 Temp Reading: " + tempReading);
 
         if(tempReading<potReading-3){
           ledRed.writeSync(1);
