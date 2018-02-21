@@ -30,57 +30,58 @@ var progGainAmp = '4096'; // see index.js for allowed values for your chip
 var tempReading  = 0;
 var potReading = 0;
 
+setInterval(readADC, 20);
 
-
+function readADC(){
 //Read the second ADC pin (potentometer) with the same code:
-if(!adc.busy)
-{
-  adc.readADCSingleEnded(channel1, progGainAmp, samplesPerSecond, function(err, data) {
-    if(err)
-    {
-      //logging / troubleshooting code goes here...
-      throw err;
-    }
-    // if you made it here, then the data object contains your reading!
-    potReading = scale(data,-50,3220,15,30)
-    console.log("Pin 1 Pot Reading: "+ data);
-    console.log("Pin 1 Temp Set: " + potReading);
-
-    //Temperature Reading
-    adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
+  if(!adc.busy)
+  {
+    adc.readADCSingleEnded(channel1, progGainAmp, samplesPerSecond, function(err, data) {
       if(err)
       {
         //logging / troubleshooting code goes here...
         throw err;
       }
       // if you made it here, then the data object contains your reading!
-      tempReading = ((data-100)/10)-40;
-  	  console.log("Pin 0 Data: "+data);
-  	  console.log("Pin 0 Temp Reading: " + tempReading);
+      potReading = scale(data,-50,3220,15,30)
+      console.log("Pin 1 Pot Reading: "+ data);
+      console.log("Pin 1 Temp Set: " + potReading);
 
-      if(tempReading<potReading-3){
-        ledRed.writeSync(1);
-        ledBlue.writeSync(0);
-        ledYellow.writeSync(0);
-      }
-      else if(tempReading>potReading+3){
-        ledRed.writeSync(0);
-        ledBlue.writeSync(1);
-        ledYellow.writeSync(0);
-      }
-      else{
-        ledRed.writeSync(0);
-        ledBlue.writeSync(0);
-        ledYellow.writeSync(1);
-      }
+      //Temperature Reading
+      adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
+        if(err)
+        {
+          //logging / troubleshooting code goes here...
+          throw err;
+        }
+        // if you made it here, then the data object contains your reading!
+        tempReading = ((data-100)/10)-40;
+    	  console.log("Pin 0 Data: "+data);
+    	  console.log("Pin 0 Temp Reading: " + tempReading);
+
+        if(tempReading<potReading-3){
+          ledRed.writeSync(1);
+          ledBlue.writeSync(0);
+          ledYellow.writeSync(0);
+        }
+        else if(tempReading>potReading+3){
+          ledRed.writeSync(0);
+          ledBlue.writeSync(1);
+          ledYellow.writeSync(0);
+        }
+        else{
+          ledRed.writeSync(0);
+          ledBlue.writeSync(0);
+          ledYellow.writeSync(1);
+        }
 
 
-  	 }
-   );
-   }    // any other data processing code goes here...
-  );
+    	 }
+      );
+     }    // any other data processing code goes here...
+    );
+  }
 }
-
 
 function scale(inputY,yMin,yMax,xMin,xMax){
   //courtesy of stack stackoverflow
