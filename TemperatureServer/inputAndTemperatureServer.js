@@ -1,7 +1,8 @@
 //LEDs
 var Gpio = require('onoff').Gpio,
 ledRed = new Gpio(17, 'out'),
-ledBlue = new Gpio(27, 'out')
+ledBlue = new Gpio(27, 'out'),
+ledYellow = new Gpio(22, 'out')
 ;
 
 
@@ -41,9 +42,9 @@ if(!adc.busy)
       throw err;
     }
     // if you made it here, then the data object contains your reading!
-    potReading = ((data-100)/10)-40;
-    console.log("Pin 1 Data: "+data);
-    console.log("Pin 1 Pot Reading: " + potReading);
+    potReading = scale(data,-50,3220,15,30)
+    console.log("Pin 1 Pot Reading: "+ data);
+    console.log("Pin 1 Temp Set: " + potReading);
 
     //Temperature Reading
     adc.readADCSingleEnded(channel0, progGainAmp, samplesPerSecond, function(err, data) {
@@ -60,10 +61,12 @@ if(!adc.busy)
       if(tempReading<potReading){
         ledRed.writeSync(1);
         ledBlue.writeSync(0);
+        ledYellow.writeSync(0);
       }
       else if(tempReading>potReading){
         ledRed.writeSync(0);
         ledBlue.writeSync(1);
+        ledYellow.writeSync(0);
       }
 
 
@@ -146,4 +149,14 @@ if (tempReading != 0){
   var request = http.request(options, callback);	// start it
   request.write(postData);							// send the data
   request.end();												// end it
+}
+
+
+function scale(inputY,yMin,yMax,xMin,xMax){
+  //courtesy of stack stackoverflow
+  //https://stackoverflow.com/questions/14224535/scaling-between-two-number-ranges
+  //
+  var percent = (inputY - yMin) / (yMax - yMin);
+  var output = percent * (xMax - xMin) + xMin;
+  return output;
 }
