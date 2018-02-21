@@ -55,8 +55,8 @@ if(!adc.busy)
 
     // make the POST data a JSON object and stringify it:
     var postData =JSON.stringify({
-      "macAddress":"12:12",
-      "sessionKey": "1212",
+      "macAddress":"B8:27:EB:57:7E:09",
+      "sessionKey": "eb9c27a5-b51a-4412-a31d-89808b6c1638",
       "data": {"temp":tempReading}
     });
 
