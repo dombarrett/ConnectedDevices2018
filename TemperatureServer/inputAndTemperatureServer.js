@@ -30,9 +30,10 @@ if(!adc.busy)
     }
     // if you made it here, then the data object contains your reading!
     reading = ((data-100)/10)-40;
-	console.log("Pin 0 Data: "+data);
-	console.log("Pin 0 Reading: " + reading);
-	}    // any other data processing code goes here...
+	  console.log("Pin 0 Data: "+data);
+	  console.log("Pin 0 Reading: " + reading);
+	 }    // any other data processing code goes here...
+  );
 
   //Now read the second ADC pin with the same code:
   adc.readADCSingleEnded(channel1, progGainAmp, samplesPerSecond, function(err, data) {
@@ -43,11 +44,11 @@ if(!adc.busy)
     }
     // if you made it here, then the data object contains your reading!
     reading = ((data-100)/10)-40;
-	console.log("Pin 1 Data: "+data);
-	console.log("Pin 1 Reading: " + reading);
-	}    // any other data processing code goes here...
-
+	  console.log("Pin 1 Data: "+data);
+	  console.log("Pin 1 Reading: " + reading);
+	 }    // any other data processing code goes here...
   );
+
 }
 
 //
