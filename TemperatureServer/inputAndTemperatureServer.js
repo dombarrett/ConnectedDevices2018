@@ -50,7 +50,7 @@ if(!adc.busy)
   	  console.log("Pin 0 Data: "+data);
   	  console.log("Pin 0 Reading: " + tempReading);
   	 }
-
+   );
    }    // any other data processing code goes here...
   );
 }
