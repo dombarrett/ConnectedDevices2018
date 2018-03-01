@@ -59,8 +59,8 @@ if(!adc.busy)
 
     // make the POST data a JSON object and stringify it:
     var postData =JSON.stringify({
-      "macAddress":"B8:27:EB:57:7E:09",
-      "sessionKey": "eb9c27a5-b51a-4412-a31d-89808b6c1638",
+      "macAddress":"SA:MP:LE:MA:CC",
+      "sessionKey": "yourSessionKey",
       "data": {"temp":tempReading}
     });
 
@@ -71,7 +71,7 @@ if(!adc.busy)
     */
 
     var options = {
-      host: 'connected-devices-itp.herokuapp.com',
+      host: 'yourhost.com',
       port: 443,
       path: '/add',
     	method: 'POST',
